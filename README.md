@@ -10,3 +10,10 @@ Use the ncbi genome information by organism [page](https://www.ncbi.nlm.nih.gov/
 ## Converting csv to tsv
 This step is necessary in order to be able to separate the fields of the summary text file to have just the GenBank ftp field. 
 - This is done by replacing the commas (CSV = comma-separated value file) to tabs (TSV = tab-separated value field)
+
+```
+cat eukaryotes.csv | tr "," "\\t" > eukaryotes.tsv
+```
+
+## Changing the format of the links 
+
