@@ -17,6 +17,7 @@ cat eukaryotes.csv | tr "," "\\t" | awk NR\>1 > eukaryotes.tsv
 ```
 
 ## Building the script
+Cutting the links and changing the format of them so that they are downloadable. 
 - The 'GenBank ftp' field is numbered 15, this makes it easy to cut this field out into a new file.
 - However the links are placed in quatation marks "",therefore need to replace these with nothing.
 - In order to make the ftp link downloadable need to include the function 'wget' (this is a function which extracts the contents of a link) at the beginning of each line and 'genomic.fna.gz' (this ensures that you are downloading the zipped FASTA format of the genomic assembly) at the end of each link.
