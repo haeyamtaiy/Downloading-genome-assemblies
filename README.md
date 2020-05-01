@@ -18,7 +18,7 @@ cat eukaryotes.csv | tr "," "\\t" | awk NR\>1 > eukaryotes.tsv
 ## Cutting the links and changing the format of them
 - The 'GenBank ftp' field is numbered 15, this makes it easy to cut this field out into a new file.
 - However the links are placed in quatation marks "",therefore need to replace these with nothing.
-- In order to make the ftp link downloadable need to include the function 'wget' (this is a function which extracts the contents of a link) at the beginning of each line and 'genomic.fna.gz' (this ensures that you are downloading the zipped FASTA format of the genomic assembly)
+- In order to make the ftp link downloadable need to include the function 'wget' (this is a function which extracts the contents of a link) at the beginning of each line and 'genomic.fna.gz' (this ensures that you are downloading the zipped FASTA format of the genomic assembly) at the end of each link.
 
 ```
 cat eukaryotes.tsv | cut -f 15 | sed 's/"//g' | awk 'BEGIN{FS=OFS="/";filesuffix="genomic.fna.gz"}{ftpdir=$0;asm=$10;file=asm"_"filesuffix;print "wget "ftpdir,file}' > links_fna_files.sh
