@@ -10,10 +10,25 @@ Use the ncbi genome information by organism [page](https://www.ncbi.nlm.nih.gov/
 ## Converting csv to tsv
 This step is necessary in order to be able to separate the fields of the summary text file to have just the GenBank ftp field. 
 - This is done by replacing the commas (CSV = comma-separated value file) to tabs (TSV = tab-separated value field)
+- Need to also remove the first line as it contains the column title 'GenBank ftp'.
+```
+cat eukaryotes.csv | tr "," "\\t" | awk NR\>1 > eukaryotes.tsv
+```
+
+## Cutting the links and changing the format of them
+- The 'GenBank ftp' field is numbered 15, this makes it easy to cut this field out into a new file.
+- However the links are placed in quatation marks "",therefore need to replace these with nothing.
+- In order to make the ftp link downloadable need to include the function 'wget'(this is a function which extracts the contents of a link) at the beginning of each line and 'genomic.fna.gz' (this ensures that you are downloading the zipped FASTA format of the assembly)
 
 ```
-cat eukaryotes.csv | tr "," "\\t" > eukaryotes.tsv
+cat eukaryotes.tsv | cut -f 15 | sed 's/"//g' | awk 'BEGIN{FS=OFS="/";filesuffix="genomic.fna.gz"}{ftpdir=$0;asm=$10;file=asm"_"filesuffix;print "wget "ftpdir,file}' > links_fna_files.sh
 ```
 
-## Changing the format of the links 
+## Run download
+The 'links_fna_file.sh' has been saved as a script with a 'wget' command at each line. This allows you to run the script which downloads all the zipped FASTA files 
+
+```
+source links_fna_files.sh
+```
+Each file is not as big as you are downloading the compressed version.
 
